@@ -7,9 +7,11 @@ module.exports = {
   target: 'electron-renderer',
   devtool: 'source-map',
   devServer: {
-    static: path.join(__dirname, 'dist/renderer.js'),
+    static: { directory: path.join(__dirname, 'dist') },
     compress: true,
-    port: 9000
+    port: 9000,
+    hot: true,
+    historyApiFallback: { index: "index.html" },
   },
   resolve: {
     alias: {
@@ -20,9 +22,15 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.ts(x?)$/,
-        include: /src/,
-        use: [{ loader: 'ts-loader' }]
+        "test": /\.tsx?$/,
+        "exclude": /node_modules/,
+        "use": {
+          "loader": "ts-loader",
+          "options": {
+            "transpileOnly": false, // Set to true if you are using fork-ts-checker-webpack-plugin
+            "projectReferences": true
+          }
+        }
       },
       {
         test: /\.s[ac]ss$/i,
@@ -40,7 +48,9 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html'
+      template: './src/index.html',
+      filename: 'index.html',
+      inject: true,
     })
   ]
 };
