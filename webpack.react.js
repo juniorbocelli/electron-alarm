@@ -1,11 +1,16 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const path = require('path');
 
 module.exports = {
-  mode: 'development',
-  entry: './src/renderer.tsx',
-  target: 'electron-renderer',
-  devtool: 'source-map',
+  "mode": "development",
+  "entry": "src/renderer.tsx",
+  "output": {
+    "path": __dirname + '/dist',
+    "filename": "[name].js"
+  },
+  "watch": false,
+
   devServer: {
     static: { directory: path.join(__dirname, 'dist') },
     compress: true,
@@ -19,8 +24,10 @@ module.exports = {
     },
     extensions: ['.tsx', '.ts', '.js'],
   },
-  module: {
-    rules: [
+
+  "context": __dirname, // to automatically find tsconfig.json
+  "module": {
+    "rules": [
       {
         "test": /\.tsx?$/,
         "exclude": /node_modules/,
@@ -31,20 +38,26 @@ module.exports = {
             "projectReferences": true
           }
         }
-      },
-      {
-        test: /\.s[ac]ss$/i,
-        use: [
-          'style-loader',
-          'css-loader',
-          'sass-loader',
-        ],
       }
     ]
   },
-  output: {
-    path: __dirname + '/dist',
-    filename: 'renderer.js'
+  resolve: {
+    modules: [
+      "node_modules",
+      path.resolve(__dirname)
+    ],
+    // TsconfigPathsPlugin will automatically add this
+    // alias: {
+    //   packages: path.resolve(__dirname, 'packages/'),
+    // },
+    extensions: [".js", ".ts", ".tsx"],
+    plugins: [
+      new TsconfigPathsPlugin({
+        logLevel: "info",
+        mainFields: "module",
+        extensions: [".js", ".ts", ".tsx"]
+      })
+    ]
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -53,4 +66,4 @@ module.exports = {
       inject: true,
     })
   ]
-};
+}
