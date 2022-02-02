@@ -46,10 +46,6 @@ module.exports = {
       "node_modules",
       path.resolve(__dirname)
     ],
-    // TsconfigPathsPlugin will automatically add this
-    // alias: {
-    //   packages: path.resolve(__dirname, 'packages/'),
-    // },
     extensions: [".js", ".ts", ".tsx"],
     plugins: [
       new TsconfigPathsPlugin({
