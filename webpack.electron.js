@@ -14,11 +14,13 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.js'],
   },
   module: {
-    rules: [{
-      test: /\.ts$/,
-      include: /src/,
-      use: [{ loader: 'ts-loader' }]
-    }]
+    rules: [
+      {
+        test: /\.ts$/,
+        include: /src/,
+        use: [{ loader: 'ts-loader' }]
+      },
+    ]
   },
   output: {
     path: __dirname + '/dist',

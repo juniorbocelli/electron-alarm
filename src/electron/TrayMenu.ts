@@ -1,5 +1,7 @@
 import { app, Tray, Menu, nativeImage, NativeImage } from 'electron';
 
+import appManager from './AppManager';
+
 export class TrayMenu {
   public readonly tray: Tray;
 
@@ -24,14 +26,12 @@ export class TrayMenu {
       {
         label: 'Alarm',
         type: 'normal',
-        click: () => {
-
-        },
+        click: () => appManager.getWindow('AlarmWindow').window.show(),
       },
       {
         label: 'Quit',
         type: 'normal',
-        click: () => app.quit()
+        click: () => app.quit(),
       }
     ]);
 

@@ -1,13 +1,12 @@
-import { app, BrowserWindow } from 'electron';
-import isDev from 'electron-is-dev';
+import { app } from 'electron';
 
 import { TrayMenu } from '@/electron/TrayMenu';
+import appManager from '@/electron/AppManager';
+import AlarmWindow from '@/electron/AlarmWindow';
 
-const appElements: any = {
-  tray: null,
-  windows: [],
-};
+app.disableHardwareAcceleration();
 
 app.on('ready', () => {
-  appElements.tray = new TrayMenu();
+  appManager.setTrayMenu(new TrayMenu());
+  appManager.addWindow('AlarmWindow', new AlarmWindow);
 });
