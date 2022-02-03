@@ -20,9 +20,18 @@ class AlarmWindow {
 
     window.loadURL(
       isDev
-      ? 'http://localhost:9000'
-      : `file://${app.getAppPath()}/index.html`
+        ? 'http://localhost:9000'
+        : `file://${app.getAppPath()}/index.html`
     );
+
+    window.setMenu(null);
+
+    window.setResizable(false);
+
+    window.on('close', (event) => {
+      event.preventDefault();
+      window.hide();
+    });
 
     return window;
   };

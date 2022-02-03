@@ -31,7 +31,7 @@ export class TrayMenu {
       {
         label: 'Quit',
         type: 'normal',
-        click: () => app.quit(),
+        click: () => app.exit(),
       }
     ]);
 
